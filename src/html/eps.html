@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
+<link rel="mask-icon" href="/favicon_io/favicon-32x32.png" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<link rel="icon" sizes="192x192" href="/favicon_io/android-chrome-192x192.png">
+<link rel="icon" sizes="512x512" href="/favicon_io/android-chrome-512x512.png">
+<link rel="manifest" href="/favicon_io/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        #episodeList {
+            width: 200px;
+            background-color: #333;
+            padding: 20px;
+            border-right: 2px solid #555; /* Adding border outline */
+        }
+
+        #videoPlayer {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .episodeItem {
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 2px solid transparent; /* Adding border outline */
+            padding: 5px;
+        }
+
+        .episodeItem:hover {
+            color: #44bd32;
+            border-color: #44bd32; /* Change border color on hover */
+        }
+
+        #videoFrame {
+            width: 50%;
+            height: 360px;
+            border: 2px solid #555; /* Adding border outline */
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="episodeList">
+    <h2>Episode List</h2>
+    <ul id="episodes">
+        <li class="episodeItem" data-src="roth.mov">Episode 1</li>
+        <!-- Add more episodes here -->
+    </ul>
+</div>
+
+<div id="videoPlayer">
+    <h2>Video Player</h2>
+    <video id="videoFrame" controls controlsList="nodownload"></video>
+</div>
+
+<script>
+    const episodeList = document.getElementById('episodes');
+    const videoFrame = document.getElementById('videoFrame');
+
+    // Function to play video
+    function playVideo(src) {
+        videoFrame.src = src;
+    }
+
+    // Event listener for episode selection
+    episodeList.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('li.episodeItem')) {
+            const src = event.target.getAttribute('data-src');
+            playVideo(src);
+        }
+    });
+
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Disable F12 key, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, and Ctrl+U
+    document.onkeydown = function(e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+            return false;
+        }
+    };
+</script>
+
+</body>
+</html>

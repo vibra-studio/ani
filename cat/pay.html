@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khalil Wallet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212; /* Dark background color */
+            color: #fff; /* Light text color */
+        }
+
+        .container {
+            background-color: #212121; /* Darker container background color */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        #balance {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #withdrawAmountDisplay {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 80%;
+            margin-bottom: 20px;
+            background-color: #424242; /* Darker range input background color */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Khalil Wallet</h1>
+        <p id="balance">Balance: $0</p>
+        <p id="withdrawAmountDisplay">Withdrawing: $0</p>
+        <input type="range" id="withdrawAmount" min="0" max="0" step="1" value="0" oninput="updateWithdrawAmountDisplay()">
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <script>
+        let balance = parseInt(localStorage.getItem('walletBalance')) || 10;
+        updateBalance();
+
+        function updateBalance() {
+            document.getElementById('balance').textContent = 'Balance: $' + balance;
+            document.getElementById('withdrawAmount').max = balance;
+        }
+
+        function updateWithdrawAmountDisplay() {
+            let amount = parseInt(document.getElementById('withdrawAmount').value);
+            document.getElementById('withdrawAmountDisplay').textContent = 'Withdrawing: $' + amount;
+        }
+
+        function withdraw() {
+            let amount = parseInt(document.getElementById('withdrawAmount').value);
+            if (amount === 0) {
+                alert('Please select a valid amount to withdraw.');
+                return;
+            }
+            if (amount > balance) {
+                alert('Insufficient funds.');
+                return;
+            }
+            
+            // Change the button text to "Loading..."
+            document.querySelector('button').textContent = 'Loading...';
+            
+            // Simulate a delay before reverting back the button text
+            setTimeout(function() {
+                document.querySelector('button').textContent = 'Withdraw';
+                // Simulate an error after 3 seconds
+                setTimeout(function() {
+                    alert('Error 368: Unable to connect to payment platform.');
+                }, 1000); // 3000 milliseconds = 3 seconds
+            }, 1000); // 3000 milliseconds = 3 seconds
+        }
+    </script>
+</body>
+</html>
